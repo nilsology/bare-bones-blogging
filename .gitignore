@@ -9,3 +9,4 @@ blog/sessions
 #exclude layouts/main because private information
 #providing a similar one
 blog/views/layouts/main.tt
+blog/views/rss_archive.tt
