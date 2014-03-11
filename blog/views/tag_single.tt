@@ -1,0 +1,7 @@
+<div id="content">
+  <div class="post-wrap">
+      [% FOREACH post IN row.0 %]
+      <li><a href="/blog/post/[% post.post_id %]" title="[% post.post_title %]">[% post.post_title %]</a></li>
+      [% END %]
+  </div>
+</div>

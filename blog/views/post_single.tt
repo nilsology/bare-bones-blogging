@@ -16,6 +16,13 @@
           Changed on:<br><span class="date">[% post.change_date %]</span><br>
           [% END %]
       </div>
+      <div class="tag-info">
+        <ul>
+          [% FOREACH tag IN tags.0 %]
+          <li><a href="/blog/tag/[% tag.tag_id %]" title="[% tag.tag_slug %]">[% tag.tag_slug %]</a></li>
+          [% END %]
+        </ul>
+      </div>
     </aside>
     <article>
       <h2>[% post.post_title %]</h2>

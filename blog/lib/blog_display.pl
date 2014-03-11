@@ -40,10 +40,29 @@ get '/post/:post_id' => sub {
   my $html = markdown($text);
 #  my $html = markdown2html($text);
   my $list = markdown_toc($text);
+  my $tags = '';
+  $sql = "SELECT tag_slug, tags.tag_id FROM tags JOIN tags_posts ON post_id = ? AND tags_posts.tag_id = tags.tag_id;";
+  $sth = database->prepare($sql);
+  $sth->execute(params->{'post_id'}) or die $sth->errstr;
+  my @tags = $sth->fetchall_arrayref({});
   template 'post_single', {
     row => \@row,
     text => $html,
-    list => $list
+    list => $list,
+    tags => \@tags
+#    tags => $tags_html
+  };
+};
+
+get '/tag/:tag_id' => sub {
+  my $tag_slug = database->quick_lookup('tags', { tag_id => params->{'tag_id'} }, 'tag_slug');
+  $sql = "SELECT posts.post_id, post_title FROM posts JOIN tags_posts ON tag_id = ? AND tags_posts.post_id = posts.post_id;";
+  $sth = database->prepare($sql);
+  $sth->execute(params->{'tag_id'}) or die $sth->errstr;
+  my @posts = $sth->fetchall_arrayref({});
+  template 'tag_single', {
+    page_title => "Posts associated with $tag_slug",
+    row => \@posts
   };
 };
 
