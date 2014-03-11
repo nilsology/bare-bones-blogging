@@ -1,0 +1,11 @@
+#vim-files
+.*.sw*
+#do not include the original config.yml
+blog/config.yml
+#exclude the specific content pages
+blog/views/pages/*
+#exclude sessions
+blog/sessions
+#exclude layouts/main because private information
+#providing a similar one
+blog/views/layouts/main.tt

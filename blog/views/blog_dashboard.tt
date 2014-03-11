@@ -1,0 +1,6 @@
+<div id="content">
+  [% INCLUDE admin_dash_menu.tt %]
+  <a href="/admin/blog/post/new" title="New Post">New Post</a><br>
+  <a href="/admin/blog/posts/overview" title="Posts Overview">Posts Overview</a><br>
+  <a href="/admin/blog/tags/overview" title="Tags Overview">Tags Overview</a>
+</div>

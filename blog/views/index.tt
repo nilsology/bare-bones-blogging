@@ -1,0 +1,3 @@
+<div id="content">
+[% proxy.uri_for(posts_overview) %]
+</div>

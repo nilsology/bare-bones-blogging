@@ -1,0 +1,33 @@
+[% base_uri = request.uri_base.replace('http', 'https') %]
+[% assets_uri = 'url to assets like css & images' %]
+<!doctype html>
+<html>
+  <head>
+    <title>[% page_title %]</title>
+    <link href="[% assets_uri %]/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+    <link rel="shortcut icon" href="[% assets_uri %]/images/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta charset="[% settings.charset %]">
+    <meta name="googlebot" content="noarchive">
+    <meta name="googlebot" content="nosnippet">
+    <meta name="googlebot" content="noindex">
+    <meta name="googlebot" content="nofollow">
+    <meta name="robots" content="noindex">
+    <meta name="robots" content="noidp">
+    <meta name="robots" content="nofollow">
+    <meta name="robots" content="noydir">
+    <meta name="robots" content="noarchive">
+</head>
+<body>
+  [% content %]
+  <ul>
+  [% IF session.user %]
+    <li><a href="/admin" title="dashboard">dashboard</a></li>
+    <li><a href="/logout" title="logout">logout</a></li>
+  [% ELSE %]
+    <li><a href="/register" title="register">register</a></li>
+    <li><a href="/login" title="login">login</a></li> 
+  [% END %]
+  </ul>
+</body>
+</html>

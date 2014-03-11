@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0">
+<channel>
+<title>Nilsology's Weblog</title>
+<link>https://nilsology.net</link>
+<description>Thoughts, ideas and more from nilsology</description>
+[% FOREACH post IN row.0 %]
+<item>
+<title>[% post.post_title %]</title>
+<link>https://nilsology.net/blog/post/[% post.post_id %]</link>
+<guid>https://nilsology.net/blog/post/[% post.post_id %]</guid>
+<pubDate>[% post.post_create_date %]</pubDate>
+</item>
+[% END %]
+</channel>
+</rss>

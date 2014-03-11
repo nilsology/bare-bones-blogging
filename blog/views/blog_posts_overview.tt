@@ -1,0 +1,54 @@
+<div id="content">
+  [% INCLUDE admin_dash_menu.tt %]
+  <table>
+    <thead>
+      <tr>
+        <th>title</th>
+        <th>public</th>
+        <th>author</th>
+        <th>create_date</th>
+        <th>change_date</th>
+      </tr>
+    </thead>
+    <tbody>
+    [% FOREACH post IN row.0 %]
+      <tr>
+        <form action="/admin/blog/post/publish" method="post">
+        <input type="hidden" name="post_id" value="[% post.post_id %]">
+        <input type="hidden" name="uuid" value="[% post.uuid %]">
+        <td>[% post.post_title %]</td>
+        <td>
+        [% IF post.post_public == 1 %]
+          <input type="checkbox" checked name="public">
+        [% ELSE %]
+          <input type="checkbox" name="public">
+        [% END %]
+        </td>
+        <td>
+        [% post.username %]
+        </td>
+        <td>[% post.post_create_date %]</td>
+        <td>
+[% IF post.post_change_date != '01 Jan 1970' %]
+[% post.post_change_date %]
+[% ELSE %]
+--
+[% END %]
+</td>
+        <td>
+        [% IF post.post_public == 1 %]
+        <input type="submit" name="submit" value="make private">
+        [% ELSIF post.post_public == 0 %]
+        <input type="submit" name="submit" value="publish">
+        [% END %]
+        </td>
+        </form>
+      </tr>
+      <tr>
+        <td><a href="/admin/blog/post/edit/[% post.post_id %]" title="Edit post">Edit Post</a></td>
+        <td><a href="/admin/blog/post/delete/[% post.post_id %]" title="Delete post">Delete Post</a></td>
+      </tr>
+    [% END %]
+    </tbody>
+  </table>
+</div>
