@@ -19,7 +19,8 @@ require_ssl();
 #
 get '/' => sub {
     template 'index', {
-      posts_overview => "/admin/blog/posts/overview"
+      #obviously you should provide an appropriate name here
+      page_title => "Nilsology's Weblog"
     };
 };
 

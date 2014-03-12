@@ -45,12 +45,13 @@ get '/post/:post_id' => sub {
   $sth = database->prepare($sql);
   $sth->execute(params->{'post_id'}) or die $sth->errstr;
   my @tags = $sth->fetchall_arrayref({});
+  my $title = database->quick_lookup('posts', { post_id => params->{'post_id'} }, 'post_title');
   template 'post_single', {
     row => \@row,
     text => $html,
     list => $list,
-    tags => \@tags
-#    tags => $tags_html
+    tags => \@tags,
+    page_title => $title
   };
 };
 
