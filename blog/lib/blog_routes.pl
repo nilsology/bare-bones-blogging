@@ -56,7 +56,7 @@ post '/post/publish' => sub {
     $public = 0;
   } 
   #setting timestamp -> current time
-  $timestamp = strftime "%Y-%m-%d %H:%M:%S", localtime;
+  $timestamp = strftime "%s", localtime;
   #check if user is authorized to publish
   if ( $role eq 'author' or $role eq 'admin' ) {
     # updates user-fields
