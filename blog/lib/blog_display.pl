@@ -32,7 +32,7 @@ get '/archive' => sub {
 };
 
 get '/post/:post_id' => sub {
-  $sql = "SELECT post_title, FROM_UNIXTIME(post_create_date, '%d %b %Y') AS create_date, FROM_UNIXTIME(post_change_date, '%d %b %Y') AS change_date, post_text FROM posts WHERE post_public=1 and post_id=?;";
+  $sql = "SELECT post_id, post_title, FROM_UNIXTIME(post_create_date, '%d %b %Y') AS create_date, FROM_UNIXTIME(post_change_date, '%d %b %Y') AS change_date, post_text FROM posts WHERE post_public=1 and post_id=?;";
   $sth = database->prepare($sql);
   $sth->execute(params->{'post_id'}) or die $sth->errstr;
   my @row = $sth->fetchall_arrayref({});
