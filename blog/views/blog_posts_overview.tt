@@ -16,7 +16,7 @@
         <form class="admin-form" action="/admin/blog/post/publish" method="post">
         <input type="hidden" name="post_id" value="[% post.post_id %]">
         <input type="hidden" name="uuid" value="[% post.uuid %]">
-        <td>[% post.post_title %]</td>
+        <td><a href="/blog/post/[% post.post_id %]">[% post.post_title %]</a></td>
         <td>
         [% IF post.post_public == 1 %]
 <!--<input type="checkbox" checked name="public">-->
