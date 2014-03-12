@@ -1,16 +1,8 @@
 <div id="content">
   [% INCLUDE admin_dash_menu.tt %]
-  <form action="/admin/blog/post/new" method="post">
+  <form class="admin-form" action="/admin/blog/post/new" method="post">
     <input type="hidden" name="uuid" value="[% session.uuid %]">
-    <input type="text" placeholder="title" name="title" value="[% title %]" required><br>
-    <textarea placeholder="text..." name="text" required>[% text %]</textarea><br>
-    <input type="text" placeholder="tag, tag, ..." name="tags" value="[% tags %]"><br>
-    <label for="public">public:</lable>
-    [% IF session.role == 'editor' %]
-    <input type="checkbox" disabled="disabled" name="public"><br>
-    [% ELSE %]
-    <input type="checkbox" checked name="public"><br>
-    [% END %]
+    <input type="text" placeholder="title" name="title" value="[% title %]" required>
     <select name="language">
     [% IF lang == 'en' %]
       <option value="de">german</option>
@@ -19,7 +11,15 @@
       <option value="de" selected>german</option>
       <option value="en">english</option>
     [% END %]
-    </select><br>
+    </select>
+    <textarea placeholder="text..." name="text" required>[% text %]</textarea><br>
+    <input type="text" placeholder="tag, tag, ..." name="tags" value="[% tags %]">
+    <label for="public">public:</lable>
+    [% IF session.role == 'editor' %]
+    <input type="checkbox" disabled="disabled" name="public"><br>
+    [% ELSE %]
+    <input type="checkbox" checked name="public"><br>
+    [% END %]
     <input type="submit" name="submit" value="post"><br>
   </form>
 </div>

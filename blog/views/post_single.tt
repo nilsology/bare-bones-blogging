@@ -15,6 +15,9 @@
           [% IF post.change_date != "01 Jan 1970" %]
           Changed on:<br><span class="date">[% post.change_date %]</span><br>
           [% END %]
+          [% IF session.user %]
+          <a href="/admin/blog/post/edit/[% post.post_id %]" title="edit post">edit this post</a>
+          [% END %]
       </div>
       <div class="tag-info">
         <ul>

@@ -13,7 +13,7 @@
     <tbody>
     [% FOREACH user IN row.0 %]
       <tr>
-        <form action="/admin/users" method="post">
+        <form class="admin-form" action="/admin/users" method="post">
         <input type="hidden" name="uuid" value="[% user.user_uuid %]">
         <td>[% user.user_name %]</td>
         <td>
@@ -50,7 +50,7 @@
   </table>
   <hr>
   <h3>Register new user</h3>
-  <form action="/account/register" method="post">
+  <form class="admin-form" action="/account/register" method="post">
     <input type="text" name="username" placeholder="Username" value="[% username %]">
     <input type="password" placeholder="Passphrase" name="passphrase">
     <input type="email" name="email" placeholder="Email" value="[% email %]">
