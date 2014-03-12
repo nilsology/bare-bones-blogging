@@ -18,3 +18,9 @@ get '/about' => sub {
     page_title => 'About' 
   };
 };
+
+get '/impress' => sub {
+  template 'pages/impress', {
+    page_title => 'Impress'
+  }
+};
