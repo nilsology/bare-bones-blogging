@@ -1,3 +1,36 @@
 <div id="content">
-[% proxy.uri_for(posts_overview) %]
+  <section>
+
+  </section>
+  <section class="3-cols">
+    <div class="col-item">
+      <article> 
+        <h2>About</h2>
+        Read more abou
+        </p>
+      </article> 
+    </div>
+    <div class="col-item">
+      <article> 
+        <h2>Hosting</h2>
+        <p>
+        <a href="https://uberspace.de" title="Uberspace.de"><img src="http://assets.nilsology.net/nilsology/images/host-badge.png" alt="HOSTED ON ASTEROIDS"></a>
+        </p>
+      </article> 
+    </div>
+  </section>
+  <div id="archive-wrap">
+  [% FOREACH post IN row.0 %]
+    <article class="archive-item">
+      <span class="archive-date">
+        [% IF post.change_date != '01 Jan 1970' %]
+        [% post.change_date %]
+        [% ELSE %]
+        [% post.create_date %]
+        [% END %]
+        </span>
+        <a class="archive-post-ref" href="/blog/post/[% post.post_id %]" title="[% post.post_title %]">[% post.post_title %]</a>
+    </article>
+  [% END %]
+  </div>
 </div>

@@ -74,7 +74,7 @@ post '/register' => sub {
 Hello $username,
 please visit the following link to confirm your account and activate it:
 
-https://nilsology.net/account/confirm/activate/$tmp_token
+http://nilsology.net/account/confirm/activate/$tmp_token
 
 If you didn't apply for this account just simply do NOT visit the provided link.
 If there are any questions you are having just shoot me an email at info\@nilsology.net.
@@ -180,7 +180,7 @@ get '/delete' => sub {
 Hello $username,
 please visit the following link to confirm that you want your account to be deleted::
 
-https://nilsology.net/account/confirm/delete/$tmp_token
+http://nilsology.net/account/confirm/delete/$tmp_token
 
 If you do NOT want your account to be deleted just do NOT visit the provided link.
 Cheers
@@ -311,7 +311,7 @@ post '/pwd_lost' => sub {
 Hello $username,
 please visit the following link if you want to recover your password:
 
-https://nilsology.net/account/pwd_recv/$tmp_token
+http://nilsology.net/account/pwd_recv/$tmp_token
 
 If you do NOT want to recover your password just do NOT follow the provided link.
 Cheers
