@@ -1,5 +1,6 @@
 <div id="content">
   <div id="archive-wrap">
+    <h2>[% page_title %]
   [% FOREACH post IN row.0 %]
     <article class="archive-item">
       <span class="archive-date">
