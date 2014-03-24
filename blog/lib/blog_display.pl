@@ -62,7 +62,7 @@ get '/tag/:tag_id' => sub {
   $sth->execute(params->{'tag_id'}) or die $sth->errstr;
   my @posts = $sth->fetchall_arrayref({});
   template 'tag_single', {
-    page_title => "Posts associated with $tag_slug",
+    page_title => "Posts associated with &raquo;$tag_slug&laquo;",
     row => \@posts
   };
 };
