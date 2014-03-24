@@ -57,7 +57,7 @@ get '/post/:post_id' => sub {
 
 get '/tag/:tag_id' => sub {
   my $tag_slug = database->quick_lookup('tags', { tag_id => params->{'tag_id'} }, 'tag_slug');
-  $sql = "SELECT posts.post_id, post_title, FROM_UNIXTIME(post_create_date, '%d %b %Y') AS create_date, FROM_UNIXTIME(post_change_date, '%d %b %Y') AS change_date FROM posts JOIN tags_posts ON tag_id = ? AND tags_posts.post_id = posts.post_id;";
+  $sql = "SELECT posts.post_id, post_title, FROM_UNIXTIME(post_create_date, '%d %b %Y') AS create_date, FROM_UNIXTIME(post_change_date, '%d %b %Y') AS change_date FROM posts JOIN tags_posts ON tag_id = ? AND tags_posts.post_id = posts.post_id ORDER BY posts.post_id DESC;";
   $sth = database->prepare($sql);
   $sth->execute(params->{'tag_id'}) or die $sth->errstr;
   my @posts = $sth->fetchall_arrayref({});
