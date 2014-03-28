@@ -11,7 +11,7 @@ use POSIX qw(strftime);
 use MIME::Lite;
 use strict;
 use warnings;
-
+use feature qw{ switch };
 our $VERSION = '0.1';
 set behind_proxy => true;
 require_ssl();

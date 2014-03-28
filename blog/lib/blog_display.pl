@@ -67,18 +67,27 @@ get '/tag/:tag_id' => sub {
   };
 };
 
-get '/archive/rss' => sub {
-  $sql = "SELECT post_id, post_title, post_create_date, post_change_date FROM posts WHERE post_public=1 ORDER BY post_create_date DESC;";
+get '/archive.rss' => sub {
+  content_type 'application/rss+xml';
+  $sql = "SELECT post_id, post_title, FROM_UNIXTIME(post_create_date, '%a, %d %M %Y %T') AS create_date FROM posts WHERE post_public=1 ORDER BY post_create_date DESC;";
   $sth = database->prepare($sql);
   $sth->execute or die $sth->errstr;
   my @row = $sth->fetchall_arrayref({});
+  $sql = "SELECT MAX(post_change_date), MAX(FROM_UNIXTIME(post_change_date, '%a, %d %M %Y %T')), MAX(post_create_date), MAX(FROM_UNIXTIME(post_create_date, '%a, %d %M %Y %T')) FROM posts LIMIT 1;";
+  $sth = database->prepare($sql);
+  $sth->execute or die $sth->errstr;
+  my @date = $sth->fetchrow_array;
+  my $lastBuildDate;
+  if ( $date[0] > $date[2] ) {
+    $lastBuildDate = $date[1];
+  } else {
+    $lastBuildDate = $date[3];
+  }
   template 'rss_archive', {
-    row => \@row
-  };
+    row => \@row,
+    lastBuildDate => $lastBuildDate
+  }, { layout => 0 };
 };
-
-#resets layout to main -> not rss
-set layout => 'main';
 
 # unset the prefix /blog
 prefix undef;

@@ -1,24 +1,12 @@
 <div id="content">
-  <section>
-
-  </section>
-  <section class="3-cols">
-    <div class="col-item">
-      <article> 
-        <h2>About</h2>
-        Read more abou
-        </p>
-      </article> 
-    </div>
-    <div class="col-item">
-      <article> 
-        <h2>Hosting</h2>
-        <p>
-        <a href="https://uberspace.de" title="Uberspace.de"><img src="http://assets.nilsology.net/nilsology/images/host-badge.png" alt="HOSTED ON ASTEROIDS"></a>
-        </p>
-      </article> 
-    </div>
-  </section>
+ <!-- <div id="index-aside"><!-- blanc -/-></div>-->
+  <div id="index-wrap">
+      <h2>Think then react.<br>In code as well as in everything else.</h2>
+      <p>
+      I am Nils Koppelmann.<br>Even though I am a student I have hobbies,<br>such as photography and web-development.
+      <a href="/about" title="about me">more about me</a>
+      </p>
+  </div>
   <div id="archive-wrap">
   [% FOREACH post IN row.0 %]
     <article class="archive-item">
