@@ -32,7 +32,11 @@ get '/archive' => sub {
 };
 
 get '/post/:post_id' => sub {
+  if ( session('user') ) {
+  $sql = "SELECT post_id, post_title, FROM_UNIXTIME(post_create_date, '%d %b %Y') AS create_date, FROM_UNIXTIME(post_change_date, '%d %b %Y') AS change_date, post_text FROM posts WHERE post_id=?;";
+  } else {
   $sql = "SELECT post_id, post_title, FROM_UNIXTIME(post_create_date, '%d %b %Y') AS create_date, FROM_UNIXTIME(post_change_date, '%d %b %Y') AS change_date, post_text FROM posts WHERE post_public=1 and post_id=?;";
+  }
   $sth = database->prepare($sql);
   $sth->execute(params->{'post_id'}) or die $sth->errstr;
   my @row = $sth->fetchall_arrayref({});
@@ -67,11 +71,12 @@ get '/tag/:tag_id' => sub {
   };
 };
 
-get '/archive.rss' => sub {
+get '/archive/rss' => sub {
   content_type 'application/rss+xml';
-  $sql = "SELECT post_id, post_title, FROM_UNIXTIME(post_create_date, '%a, %d %M %Y %T') AS create_date FROM posts WHERE post_public=1 ORDER BY post_create_date DESC;";
+  $sql = "SELECT post_text, post_id, post_title, FROM_UNIXTIME(post_create_date, '%a, %d %M %Y %T') AS create_date FROM posts WHERE post_public=1 ORDER BY post_create_date DESC;";
   $sth = database->prepare($sql);
   $sth->execute or die $sth->errstr;
+  #convert markdown_text to html -> rss friendly
   my @row = $sth->fetchall_arrayref({});
   $sql = "SELECT MAX(post_change_date), MAX(FROM_UNIXTIME(post_change_date, '%a, %d %M %Y %T')), MAX(post_create_date), MAX(FROM_UNIXTIME(post_create_date, '%a, %d %M %Y %T')) FROM posts LIMIT 1;";
   $sth = database->prepare($sql);
