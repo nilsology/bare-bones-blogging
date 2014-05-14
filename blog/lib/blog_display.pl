@@ -77,7 +77,17 @@ get '/archive/rss' => sub {
   $sth = database->prepare($sql);
   $sth->execute or die $sth->errstr;
   #convert markdown_text to html -> rss friendly
-  my @row = $sth->fetchall_arrayref({});
+  my $row = $sth->fetchall_arrayref({});
+  my @posts = ();
+  my ($post_text, $post_title, $post_id, $create_date);
+  foreach my $res (@$row) {
+    $post_text = markdown($res->{post_text}); 
+    $post_title = $res->{post_title};
+    $create_date = $res->{create_date};
+    $post_id = $res->{post_id};
+    my %row = ( post_id => $post_id, create_date => $create_date, post_text => $post_text, post_title => $post_title );
+    push ( @posts, \%row );
+  } 
   $sql = "SELECT MAX(post_change_date), MAX(FROM_UNIXTIME(post_change_date, '%a, %d %M %Y %T')), MAX(post_create_date), MAX(FROM_UNIXTIME(post_create_date, '%a, %d %M %Y %T')) FROM posts LIMIT 1;";
   $sth = database->prepare($sql);
   $sth->execute or die $sth->errstr;
@@ -89,7 +99,7 @@ get '/archive/rss' => sub {
     $lastBuildDate = $date[3];
   }
   template 'rss_archive', {
-    row => \@row,
+    row => \@posts,
     lastBuildDate => $lastBuildDate
   }, { layout => 0 };
 };
