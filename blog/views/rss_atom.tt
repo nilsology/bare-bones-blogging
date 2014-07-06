@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0">
+<channel>
+  <title>Nilsology's Weblog</title>
+  <link>http://nilsology.net</link>
+  <description>Thoughts, ideas and more from nilsology</description>
+  <lastBuildDate>[% lastBuildDate %]</lastBuildDate>
+  <ttl>1</ttl>
+  [% FOREACH post IN row %]
+  <item>
+    <title>[% post.post_title %]</title>
+    <link>http://nilsology.net/blog/post/[% post.post_id %]</link>
+    <guid isPermaLink="true">http://nilsology.net/blog/post/[% post.post_id %]</guid>
+    <pubDate>[% post.create_date %]</pubDate>
+    <description>[% post.post_text %]</description>
+  </item>
+  [% END %]
+  </channel>
+</rss>

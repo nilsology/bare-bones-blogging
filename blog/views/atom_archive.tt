@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>Nilsology's Weblog</title>
+  <subtitle>Thoughts, ideas and more from nilsology</subtitle>
+  <link href="http://nilsology.net/"/>
+  <updated>[% lastBuildDate %]</updated>
+  <id>http://nilsology.net/blog/</id>
+  [% FOREACH post IN row %]
+  <entry>
+    <title>[% post.post_title %]</title>
+    <link href="http://nilsology.net/blog/post/[% post.post_id %]"></link>
+    <id>http://nilsology.net/blog/post/[% post.post_id %]</id>
+    <author><name>Nils Koppelmann</name></author>
+    <published>[% post.create_date %]</published>
+    <updated>[% post.change_date %]</updated>
+    <summary type="html"><![CDATA[[% post.post_text %]]]></summary>
+  </entry>
+  [% END %]
+</feed>

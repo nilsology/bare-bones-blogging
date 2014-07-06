@@ -73,7 +73,7 @@ get '/tag/:tag_id' => sub {
 
 get '/archive/rss' => sub {
   content_type 'application/rss+xml';
-  $sql = "SELECT post_text, post_id, post_title, FROM_UNIXTIME(post_create_date, '%a, %d %M %Y %T') AS create_date FROM posts WHERE post_public=1 ORDER BY post_create_date DESC;";
+  $sql = "SELECT post_text, post_id, post_title, FROM_UNIXTIME(post_create_date, '%a, %d %b %Y %T') AS create_date FROM posts WHERE post_public=1 ORDER BY post_create_date DESC;";
   $sth = database->prepare($sql);
   $sth->execute or die $sth->errstr;
   #convert markdown_text to html -> rss friendly
@@ -81,14 +81,48 @@ get '/archive/rss' => sub {
   my @posts = ();
   my ($post_text, $post_title, $post_id, $create_date);
   foreach my $res (@$row) {
-    $post_text = markdown($res->{post_text}); 
+    $post_text = "<![CDATA[".markdown($res->{post_text})."]]>"; 
     $post_title = $res->{post_title};
-    $create_date = $res->{create_date};
+    $create_date = $res->{create_date}." GMT";
     $post_id = $res->{post_id};
     my %row = ( post_id => $post_id, create_date => $create_date, post_text => $post_text, post_title => $post_title );
     push ( @posts, \%row );
   } 
-  $sql = "SELECT MAX(post_change_date), MAX(FROM_UNIXTIME(post_change_date, '%a, %d %M %Y %T')), MAX(post_create_date), MAX(FROM_UNIXTIME(post_create_date, '%a, %d %M %Y %T')) FROM posts LIMIT 1;";
+  $sql = "SELECT MAX(post_change_date), MAX(FROM_UNIXTIME(post_change_date, '%a, %d %b %Y %T')), MAX(post_create_date), MAX(FROM_UNIXTIME(post_create_date, '%a, %d %b %Y %T')) FROM posts LIMIT 1;";
+  $sth = database->prepare($sql);
+  $sth->execute or die $sth->errstr;
+  my @date = $sth->fetchrow_array;
+  my $lastBuildDate;
+  if ( $date[0] > $date[2] ) {
+    $lastBuildDate = $date[1]." GMT";
+  } else {
+    $lastBuildDate = $date[3];
+  }
+  template 'rss_archive', {
+    row => \@posts,
+    lastBuildDate => $lastBuildDate
+  }, { layout => 0 };
+};
+
+get '/archive/atom' => sub {
+  content_type 'application/atom+xml';
+  $sql = "SELECT post_text, post_id, post_title, FROM_UNIXTIME(post_change_date, '%Y-%m-%dT%TZ') AS update_date, FROM_UNIXTIME(post_create_date, '%Y-%m-%dT%TZ') AS create_date FROM posts WHERE post_public=1 ORDER BY post_create_date DESC;";
+  $sth = database->prepare($sql);
+  $sth->execute or die $sth->errstr;
+  #convert markdown_text to html -> rss friendly
+  my $row = $sth->fetchall_arrayref({});
+  my @posts = ();
+  my ($post_text, $post_title, $post_id, $create_date, $change_date);
+  foreach my $res (@$row) {
+    $post_text = markdown($res->{post_text}); 
+    $post_title = $res->{post_title};
+    $create_date = $res->{create_date};
+    $change_date = $res->{update_date};
+    $post_id = $res->{post_id};
+    my %row = ( post_id => $post_id, create_date => $create_date, change_date => $change_date, post_text => $post_text, post_title => $post_title );
+    push ( @posts, \%row );
+  } 
+  $sql = "SELECT MAX(post_change_date), MAX(FROM_UNIXTIME(post_change_date, '%Y-%m-%dT%TZ')), MAX(post_create_date), MAX(FROM_UNIXTIME(post_create_date, '%Y-%m-%dT%TZ')) FROM posts LIMIT 1;";
   $sth = database->prepare($sql);
   $sth->execute or die $sth->errstr;
   my @date = $sth->fetchrow_array;
@@ -98,7 +132,7 @@ get '/archive/rss' => sub {
   } else {
     $lastBuildDate = $date[3];
   }
-  template 'rss_archive', {
+  template 'atom_archive', {
     row => \@posts,
     lastBuildDate => $lastBuildDate
   }, { layout => 0 };
