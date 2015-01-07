@@ -19,8 +19,20 @@ get '/about' => sub {
   };
 };
 
+get '/about/new' => sub {
+  template 'pages/about_2', {
+    page_title => 'About (Test)'
+  }
+};
+
 get '/gallery' => sub {
   template 'pages/gallery', {
+    page_title => 'Gallery' 
+  };
+};
+
+get '/gallery/new' => sub {
+  template 'pages/gallery_2', {
     page_title => 'Gallery' 
   };
 };

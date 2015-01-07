@@ -1,9 +1,10 @@
 <div id="content">
  <!-- <div id="index-aside"><!-- blanc -/-></div>-->
   <div id="index-wrap">
-      <h2>Think then react.<br>In code as well as in everything else.</h2>
+      <!--<h2>Think then react.<br>In code as well as in everything else.</h2>-->
+      <h2>Think creative.<br>Be creative.<br>Create.</h2>
       <p>
-      I am Nils Koppelmann.<br>Allthough I am a student I have hobbies,<br>such as photography and web-development.
+      I am Nils Koppelmann.<br>Although I am a student I have hobbies,<br>such as photography and web-development.
       <a href="/about" title="about me">more about me</a>
       </p>
   </div>
